@@ -16,6 +16,8 @@ class Engine
     
     private:
         Window m_Window;
+        sf::Texture bitmanTexture;
+        sf::Sprite bitmanSprite;
 };
 
 #endif

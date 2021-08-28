@@ -1,69 +1,50 @@
 #include "Engine.hpp"
 
-Engine::Engine() : m_Window("bitman")
+Engine::Engine() : window("bitman")
 {
-    bitmanTexture.loadFromFile("content/player/bitman_idle.png");
-    bitmanSprite.setTexture(bitmanTexture);
+    std::shared_ptr<SceneSplashScreen> splashScreen 
+        = std::make_shared<SceneSplashScreen>(sceneStateMachine, window);
+
+    std::shared_ptr<SceneGame> gameScene = std::make_shared<SceneGame>();
+
+    unsigned int splashScreenId = sceneStateMachine.addScene(splashScreen);
+    unsigned int gameSceneId = sceneStateMachine.addScene(gameScene);
+
+    splashScreen -> setSwitchToScene(gameSceneId);
+    sceneStateMachine.switchToScene(splashScreenId);
 
     deltaTime = clock.restart().asSeconds();
 }
 
+void Engine::processInput()
+{
+    sceneStateMachine.processInput();
+}
+
 void Engine::update()
 {
-    m_Window.update();
-
-    const sf::Vector2f& spritePos = bitmanSprite.getPosition();
-    const int moveSpeed = 100;
-    int xMove = 0;
-
-    if (m_InputManager.isKeyPressed(InputManager::Key::Left))
-    {
-        xMove = -moveSpeed;
-    }
-    else if (m_InputManager.isKeyPressed(InputManager::Key::Right))
-    {
-        xMove = moveSpeed;
-    }
-
-    int yMove = 0;
-    if (m_InputManager.isKeyPressed(InputManager::Key::Up))
-    {
-        yMove = -moveSpeed;
-    }
-    else if (m_InputManager.isKeyPressed(InputManager::Key::Down))
-    {
-        yMove = moveSpeed;
-    }
-
-    float xFrameMove = xMove * deltaTime;
-    float yFrameMove = yMove * deltaTime;
-
-    bitmanSprite.setPosition(spritePos.x + xFrameMove, spritePos.y + yFrameMove);
+    window.update();
+    sceneStateMachine.update(deltaTime);
 }
 
 void Engine::lateUpdate()
 {
-
+    sceneStateMachine.lateUpdate(deltaTime);
 }
 
 void Engine::render()
 {
-    m_Window.startRender();
-    m_Window.render(bitmanSprite);
-    m_Window.endRender();
+    window.startRender();
+    sceneStateMachine.render(window);
+    window.endRender();
 }
 
 bool Engine::isRunning() const
 {
-    return m_Window.isOpen();
+    return window.isOpen();
 }
 
 void Engine::calculateDeltaTime()
 {
     deltaTime = clock.restart().asSeconds();
-}
-
-void Engine::captureInput()
-{
-    m_InputManager.update();
 }

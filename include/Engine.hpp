@@ -5,25 +5,29 @@
 #include <iostream>
 #include "Window.hpp"
 #include "InputManager.hpp"
+#include "SceneStateMachine.hpp"
+#include "SceneSplashScreen.hpp"
+#include "SceneGame.hpp"
 
 class Engine
 {
     public:
         Engine();
+        void processInput();
         void update();
         void lateUpdate();
         void render();
         bool isRunning() const;
         void calculateDeltaTime();
-        void captureInput();
     
     private:
         sf::Clock clock;
         float deltaTime;
-        Window m_Window;
+        Window window;
         sf::Texture bitmanTexture;
         sf::Sprite bitmanSprite;
-        InputManager m_InputManager;
+        InputManager inputManager;
+        SceneStateMachine sceneStateMachine;
 };
 
 #endif

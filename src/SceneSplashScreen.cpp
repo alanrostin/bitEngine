@@ -14,7 +14,7 @@ void SceneSplashScreen::onCreate()
 
     sf::FloatRect spriteSize = splashSprite.getLocalBounds();
     splashSprite.setOrigin(spriteSize.width * 0.5f, spriteSize.height * 0.5f);
-    splashSprite.setScale(0.5f, 0.5f);
+    // splashSprite.setScale(0.5f, 0.5f);
     sf::Vector2u windowCenter = window.getCenter();
 
     splashSprite.setPosition(windowCenter.x, windowCenter.y);

@@ -18,7 +18,7 @@ class Window
         bool isOpen() const;
     
     private:
-        sf::RenderWindow m_Window;
+        sf::RenderWindow window;
 };
 
 #endif

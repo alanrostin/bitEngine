@@ -5,7 +5,7 @@ int main() {
 
     while (engine.isRunning())
     {
-        engine.captureInput();
+        engine.processInput();
         engine.update();
         engine.lateUpdate();
         engine.render();

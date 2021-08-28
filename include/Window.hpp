@@ -12,6 +12,9 @@ class Window
         void startRender();
         void render(const sf::Drawable& drawable);
         void endRender();
+
+        sf::Vector2u getCenter() const;
+        
         bool isOpen() const;
     
     private:

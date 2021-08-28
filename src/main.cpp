@@ -5,8 +5,10 @@ int main() {
 
     while (engine.isRunning())
     {
+        engine.captureInput();
         engine.update();
         engine.lateUpdate();
         engine.render();
+        engine.calculateDeltaTime();
     }
 }

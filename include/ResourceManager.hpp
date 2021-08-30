@@ -14,11 +14,11 @@ class ResourceManager
             auto it = resources.find(filePath);
             if (it != resources.end())
             {
-                return it -> seccond.first;
+                return it -> second.first;
             }
 
-            std::shared_ptr<T> resources = std::make_shared<T>();
-            if (!resources -> loadFromFile(filePath))
+            std::shared_ptr<T> resource = std::make_shared<T>();
+            if (!resource -> loadFromFile(filePath))
             {
                 return -1;
             }
@@ -60,7 +60,7 @@ class ResourceManager
 
     private:
         int currentId;
-        std::map<std::string, std::pair<int, std::shared_ptr<t>>> resources;
+        std::map<std::string, std::pair<int, std::shared_ptr<T>>> resources;
 };
 
 #endif

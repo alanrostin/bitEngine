@@ -21,12 +21,11 @@ class Engine
         void calculateDeltaTime();
     
     private:
+        Window window;
+        
         sf::Clock clock;
         float deltaTime;
-        Window window;
-        sf::Texture bitmanTexture;
-        sf::Sprite bitmanSprite;
-        InputManager inputManager;
+
         SceneStateMachine sceneStateMachine;
         ResourceManager<sf::Texture> textureManager;
 };

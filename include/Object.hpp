@@ -6,10 +6,12 @@
 
 #include "Window.hpp"
 #include "Component.hpp"
+#include "TransformComponent.hpp"
 
 class Object
 {
     public:
+        Object();
         // Awake is called when object created.
         // Use to ensure required components are present
         void awake();
@@ -57,6 +59,8 @@ class Object
 
             return nullptr;
         }
+
+        std::shared_ptr<TransformComponent> transform;
     
     private:
         std::vector<std::shared_ptr<Component>> components;

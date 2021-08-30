@@ -5,6 +5,7 @@
 #include "InputManager.hpp"
 #include "Object.hpp"
 #include "SpriteComponent.hpp"
+#include "KeyboardMovementComponent.hpp"
 
 class SceneGame : public Scene
 {
@@ -14,6 +15,7 @@ class SceneGame : public Scene
         void onDestroy() override;
         void processInput() override;
         void update(float deltaTime) override;
+        void lateUpdate(float deltaTime) override;
         void render(Window& window) override;
     
     private:

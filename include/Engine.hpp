@@ -28,6 +28,7 @@ class Engine
         sf::Sprite bitmanSprite;
         InputManager inputManager;
         SceneStateMachine sceneStateMachine;
+        ResourceManager<sf::Texture> textureManager;
 };
 
 #endif

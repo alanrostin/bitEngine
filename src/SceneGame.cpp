@@ -1,6 +1,7 @@
 #include "SceneGame.hpp"
 
-SceneGame::SceneGame()
+SceneGame::SceneGame(ResourceManager<sf::Texture>& textureManager) 
+    : textureManager(textureManager)
 {
 
 }
@@ -11,6 +12,7 @@ void SceneGame::onCreate()
 
     // Adds a component by calling our previously written template function.
     auto sprite = player -> addComponent<SpriteComponent>();
+    sprite -> setTextureManager(&textureManager);
     sprite -> load("content/player/bitman_idle.png");
 
     auto movement = player -> addComponent<KeyboardMovementComponent>();

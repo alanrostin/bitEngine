@@ -1,23 +1,27 @@
 #include "SceneSplashScreen.hpp"
 
-SceneSplashScreen::SceneSplashScreen(SceneStateMachine& sceneStateMachine, Window& window) 
+SceneSplashScreen::SceneSplashScreen(SceneStateMachine& sceneStateMachine, 
+    Window& window, ResourceManager<sf::Texture>& textureManager) 
     : sceneStateMachine(sceneStateMachine), window(window), 
-    switchToState(0), currentSeconds(0.f), showForSeconds(3.f)
+    switchToState(0), currentSeconds(0.0f), showForSeconds(3.0f), 
+    textureManager(textureManager)
 {
 
 }
 
 void SceneSplashScreen::onCreate()
 {
-    splashTexture.loadFromFile("content/backgrounds/splash-screen.png");
-    splashSprite.setTexture(splashTexture);
-
-    sf::FloatRect spriteSize = splashSprite.getLocalBounds();
-    splashSprite.setOrigin(spriteSize.width * 0.5f, spriteSize.height * 0.5f);
-    // splashSprite.setScale(0.5f, 0.5f);
-    sf::Vector2u windowCenter = window.getCenter();
-
-    splashSprite.setPosition(windowCenter.x, windowCenter.y);
+    int textureId = textureManager.addResource("content/backgrounds/splash-screen.png");
+    
+    if (textureId >= 0)
+    {
+        std::shared_ptr<sf::Texture> texture = textureManager.getResource(textureId);
+        splashSprite.setTexture(*texture);
+        sf::FloatRect spriteSize = splashSprite.getLocalBounds();
+        splashSprite.setOrigin(spriteSize.width * 0.5f, spriteSize.height * 0.5f);
+        sf::Vector2u windowCenter = window.getCenter();
+        splashSprite.setPosition(windowCenter.x, windowCenter.y);
+    }   
 }
 
 void SceneSplashScreen::onActivate()

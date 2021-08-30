@@ -6,11 +6,12 @@
 #include "Object.hpp"
 #include "SpriteComponent.hpp"
 #include "KeyboardMovementComponent.hpp"
+#include "ResourceManager.hpp"
 
 class SceneGame : public Scene
 {
     public:
-        SceneGame();
+        SceneGame(ResourceManager<sf::Texture>& textureManager);
         void onCreate() override;
         void onDestroy() override;
         void processInput() override;
@@ -21,6 +22,7 @@ class SceneGame : public Scene
     private:
         std::shared_ptr<Object> player;
         InputManager inputManager;
+        ResourceManager<sf::Texture>& textureManager;
 };
 
 #endif

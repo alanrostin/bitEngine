@@ -1,6 +1,6 @@
 #include "TransformComponent.hpp"
 
-TransformComponent::TransformComponent(Object* owner) : Component(owner), position(0.0f, 0.0f)
+TransformComponent::TransformComponent(Object* object) : Component(object), position(0.0f, 0.0f)
 {
 
 }

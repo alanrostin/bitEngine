@@ -8,7 +8,7 @@ class Object;
 class Component
 {
     public:
-        Component(Object* owner) : owner(owner) {}
+        Component(Object* object) : object(object) {}
         virtual void awake() {}
         virtual void start() {}
         virtual void update(float deltaTime) {}
@@ -16,7 +16,7 @@ class Component
         virtual void render(Window& window) {}
     
     protected:
-        Object* owner;
+        Object* object;
 };
 
 #endif

@@ -6,7 +6,7 @@
 class TransformComponent : public Component
 {
     public:
-        TransformComponent(Object* owner);
+        TransformComponent(Object* object);
         void setPosition(float x, float y);
         void setPosition(const sf::Vector2f& pos);
         void addPosition(float x, float y);

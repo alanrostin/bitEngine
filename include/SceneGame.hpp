@@ -3,6 +3,8 @@
 
 #include "Scene.hpp"
 #include "InputManager.hpp"
+#include "Object.hpp"
+#include "SpriteComponent.hpp"
 
 class SceneGame : public Scene
 {
@@ -15,8 +17,7 @@ class SceneGame : public Scene
         void render(Window& window) override;
     
     private:
-        sf::Texture bitmanTexture;
-        sf::Sprite bitmanSprite;
+        std::shared_ptr<Object> player;
         InputManager inputManager;
 };
 

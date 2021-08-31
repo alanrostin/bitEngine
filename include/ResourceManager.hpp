@@ -29,22 +29,22 @@ class ResourceManager
             return currentId;
         }
 
-        void removeResource(int resourceId)
+        void removeResource(int id)
         {
             for (auto it = resources.begin(); it != resources.end(); ++it)
             {
-                if (it -> second.first = resourceId)
+                if (it -> second.first = id)
                 {
                     resources.erase(it -> first);
                 }
             }
         }
 
-        std::shared_ptr<T> getResource(int resourceId)
+        std::shared_ptr<T> getResource(int id)
         {
             for (auto it = resources.begin(); it != resources.end(); ++it)
             {
-                if (it -> second.first == resourceId)
+                if (it -> second.first == id)
                 {
                     return it -> second.second;
                 }
@@ -53,9 +53,9 @@ class ResourceManager
             return nullptr;
         }
 
-        bool hasResource(int resourceId)
+        bool hasResource(int id)
         {
-            return (getResource(resourceId) != nullptr);
+            return (getResource(id) != nullptr);
         }
 
     private:

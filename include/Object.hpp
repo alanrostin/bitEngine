@@ -42,7 +42,7 @@ class Object
             components.push_back(newComponent);
             
             return newComponent;
-        }
+        };
 
         template<typename T> std::shared_ptr<T> getComponent()
         {
@@ -58,12 +58,16 @@ class Object
             }
 
             return nullptr;
-        }
+        };
+
+        void queueForRemove();
+        bool isQueuedForRemove();
 
         std::shared_ptr<TransformComponent> transform;
     
     private:
         std::vector<std::shared_ptr<Component>> components;
+        bool queuedForRemove;
 };
 
 #endif

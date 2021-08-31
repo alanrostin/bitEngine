@@ -7,6 +7,7 @@
 #include "SpriteComponent.hpp"
 #include "KeyboardMovementComponent.hpp"
 #include "ResourceManager.hpp"
+#include "ObjectManager.hpp"
 
 class SceneGame : public Scene
 {
@@ -23,6 +24,7 @@ class SceneGame : public Scene
         std::shared_ptr<Object> player;
         InputManager inputManager;
         ResourceManager<sf::Texture>& textureManager;
+        ObjectManager objects;
 };
 
 #endif

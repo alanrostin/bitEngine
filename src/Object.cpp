@@ -1,6 +1,6 @@
 #include "Object.hpp"
 
-Object::Object()
+Object::Object() : queuedForRemove(false)
 {
     transform = addComponent<TransformComponent>();
 }
@@ -43,4 +43,14 @@ void Object::render(Window& window)
     {
         components[i] -> render(window);
     }
+}
+
+void Object::queueForRemove()
+{
+    queuedForRemove = true;
+}
+
+bool Object::isQueuedForRemove()
+{
+    return queuedForRemove;
 }

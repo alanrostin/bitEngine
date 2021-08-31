@@ -26,7 +26,7 @@ class ResourceManager
             resources.insert(std::make_pair(filePath, 
                 std::make_pair(currentId, resource)));
 
-            return currentId;
+            return currentId++;
         }
 
         void removeResource(int id)

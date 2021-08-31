@@ -3,6 +3,7 @@
 
 #include <SFML/Graphics.hpp>
 #include <iostream>
+#include "ContentPath.hpp"
 #include "Window.hpp"
 #include "InputManager.hpp"
 #include "SceneStateMachine.hpp"
@@ -22,6 +23,7 @@ class Engine
     
     private:
         Window window;
+        ContentPath contentPath;
         
         sf::Clock clock;
         float deltaTime;

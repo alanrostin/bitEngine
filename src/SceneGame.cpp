@@ -1,7 +1,7 @@
 #include "SceneGame.hpp"
 
-SceneGame::SceneGame(ResourceManager<sf::Texture>& textureManager) 
-    : textureManager(textureManager)
+SceneGame::SceneGame(ContentPath& contentPath, ResourceManager<sf::Texture>& textureManager) 
+    : contentPath(contentPath),  textureManager(textureManager)
 {
 
 }
@@ -13,10 +13,24 @@ void SceneGame::onCreate()
     // Adds a component by calling our previously written template function.
     auto sprite = player -> addComponent<SpriteComponent>();
     sprite -> setTextureManager(&textureManager);
-    sprite -> load("content/player/bitman_idle.png");
 
     auto movement = player -> addComponent<KeyboardMovementComponent>();
     movement -> setInput(&inputManager);
+
+    auto animation = player -> addComponent<AnimationComponent>();
+    int bitmanTextureId = textureManager.addResource(contentPath.getPath() + "player/viking_animation.png");
+    const int frameWidth = 165;
+    const int frameHeight = 145;
+
+    std::shared_ptr<Animation> idleAnimation = std::make_shared<Animation>();
+
+    const float idleAnimationSeconds = 0.2f;
+    idleAnimation -> addFrame(bitmanTextureId, 600, 0, frameWidth, frameHeight, idleAnimationSeconds);
+    idleAnimation -> addFrame(bitmanTextureId, 800, 0, frameWidth, frameHeight, idleAnimationSeconds);
+    idleAnimation -> addFrame(bitmanTextureId, 0, 145, frameWidth, frameHeight, idleAnimationSeconds);
+    idleAnimation -> addFrame(bitmanTextureId, 200, 145, frameWidth, frameHeight, idleAnimationSeconds);
+
+    animation -> addAnimation(AnimationState::Idle, idleAnimation);
 
     objects.addObject(player);
 }

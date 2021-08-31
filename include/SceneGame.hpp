@@ -3,16 +3,18 @@
 
 #include "Scene.hpp"
 #include "InputManager.hpp"
+#include "ContentPath.hpp"
 #include "Object.hpp"
 #include "SpriteComponent.hpp"
 #include "KeyboardMovementComponent.hpp"
 #include "ResourceManager.hpp"
 #include "ObjectManager.hpp"
+#include "AnimationComponent.hpp"
 
 class SceneGame : public Scene
 {
     public:
-        SceneGame(ResourceManager<sf::Texture>& textureManager);
+        SceneGame(ContentPath& contentPath, ResourceManager<sf::Texture>& textureManager);
         void onCreate() override;
         void onDestroy() override;
         void processInput() override;
@@ -21,7 +23,8 @@ class SceneGame : public Scene
         void render(Window& window) override;
     
     private:
-        std::shared_ptr<Object> player;
+        // std::shared_ptr<Object> player;
+        ContentPath& contentPath;
         InputManager inputManager;
         ResourceManager<sf::Texture>& textureManager;
         ObjectManager objects;

@@ -3,12 +3,13 @@
 
 #include <SFML/Graphics.hpp>
 #include "SceneStateMachine.hpp"
+#include "ContentPath.hpp"
 #include "ResourceManager.hpp"
 
 class SceneSplashScreen : public Scene
 {
     public:
-        SceneSplashScreen(SceneStateMachine& sceneStateMachine, 
+        SceneSplashScreen(ContentPath& contentPath, SceneStateMachine& sceneStateMachine, 
             Window& window, ResourceManager<sf::Texture>& textureManager);
         void onCreate() override;
         void onDestroy() override;
@@ -20,6 +21,8 @@ class SceneSplashScreen : public Scene
     private:
         sf::Texture splashTexture;
         sf::Sprite splashSprite;
+
+        ContentPath& contentPath;
         SceneStateMachine& sceneStateMachine;
         Window& window;
         ResourceManager<sf::Texture>& textureManager;

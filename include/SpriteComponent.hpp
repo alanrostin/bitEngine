@@ -17,10 +17,14 @@ class SpriteComponent : public Component
 
         void lateUpdate(float deltaTime) override;
         void render(Window& window) override;
+
+        void setTextureRect(int x, int y, int width, int height);
+        void setTextureRect(const sf::IntRect& rect);
     
     private:
         ResourceManager<sf::Texture>* resourceManager;
         sf::Sprite sprite;
+        int currentTextureId;
 };
 
 #endif

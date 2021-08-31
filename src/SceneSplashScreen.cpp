@@ -1,8 +1,8 @@
 #include "SceneSplashScreen.hpp"
 
-SceneSplashScreen::SceneSplashScreen(SceneStateMachine& sceneStateMachine, 
+SceneSplashScreen::SceneSplashScreen(ContentPath& contentPath, SceneStateMachine& sceneStateMachine, 
     Window& window, ResourceManager<sf::Texture>& textureManager) 
-    : sceneStateMachine(sceneStateMachine), window(window), 
+    : contentPath(contentPath), sceneStateMachine(sceneStateMachine), window(window), 
     switchToState(0), currentSeconds(0.0f), showForSeconds(3.0f), 
     textureManager(textureManager)
 {
@@ -11,7 +11,7 @@ SceneSplashScreen::SceneSplashScreen(SceneStateMachine& sceneStateMachine,
 
 void SceneSplashScreen::onCreate()
 {
-    int textureId = textureManager.addResource("content/backgrounds/splash-screen.png");
+    int textureId = textureManager.addResource(contentPath.getPath() + "backgrounds/splash-screen.png");
     
     if (textureId >= 0)
     {

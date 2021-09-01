@@ -33,6 +33,17 @@ void SceneGame::onCreate()
 
     animation -> addAnimation(AnimationState::Idle, idleAnimation);
 
+    std::shared_ptr<Animation> walkAnimation = std::make_shared<Animation>(FacingDirection::Right);
+
+    const float walkAnimationFrameSeconds = 0.15f;
+    walkAnimation -> addFrame(bitmanTextureId, 600, 290, frameWidth, frameHeight, walkAnimationFrameSeconds);
+    walkAnimation -> addFrame(bitmanTextureId, 800, 290, frameWidth, frameHeight, walkAnimationFrameSeconds);
+    walkAnimation -> addFrame(bitmanTextureId, 0, 435, frameWidth, frameHeight, walkAnimationFrameSeconds);
+    walkAnimation -> addFrame(bitmanTextureId, 200, 435, frameWidth, frameHeight, walkAnimationFrameSeconds);
+    walkAnimation -> addFrame(bitmanTextureId, 400, 435, frameWidth, frameHeight, walkAnimationFrameSeconds);
+
+    animation -> addAnimation(AnimationState::Walk, walkAnimation);
+
     objects.addObject(player);
 }
 

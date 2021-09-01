@@ -2,7 +2,7 @@
 #include "Object.hpp"
 
 KeyboardMovementComponent::KeyboardMovementComponent(Object* object) 
-    : Component(object), moveSpeed(100)
+    : Component(object), moveSpeed(200)
 {
 
 }
@@ -57,4 +57,13 @@ void KeyboardMovementComponent::update(float deltaTime)
     float yFrameMove = yMove * deltaTime;
 
     object -> transform -> addPosition(xFrameMove, yFrameMove);
+
+    if (xMove == 0 && yMove == 0)
+    {
+        animation -> setAnimationState(AnimationState::Idle);
+    }
+    else
+    {
+        animation -> setAnimationState(AnimationState::Walk);
+    }
 }

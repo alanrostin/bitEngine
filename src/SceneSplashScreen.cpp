@@ -11,7 +11,7 @@ SceneSplashScreen::SceneSplashScreen(ContentPath& contentPath, SceneStateMachine
 
 void SceneSplashScreen::onCreate()
 {
-    int textureId = textureManager.addResource(contentPath.getPath() + "backgrounds/splash-screen.png");
+    int textureId = textureManager.addResource(contentPath.getPath() + "splash-screen.png");
     
     if (textureId >= 0)
     {

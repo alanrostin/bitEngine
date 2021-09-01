@@ -26,6 +26,8 @@ std::vector<std::shared_ptr<Object>> TileMapParser::parse(const std::string& til
 
     std::vector<std::shared_ptr<Object>> tileObjects;
 
+    int layerCount = tiles -> size() - 1;
+
     for (const auto& layer : *tiles)
     {
         for (const auto& tile : *layer.second)
@@ -41,6 +43,7 @@ std::vector<std::shared_ptr<Object>> TileMapParser::parse(const std::string& til
             sprite -> load(tileInfo -> textureId);
             sprite -> setTextureRect(tileInfo -> textureRect);
             sprite -> setScale(tileScale, tileScale);
+            sprite -> setSortOrder(layerCount);
 
             // Calculate world position
             float x = tile -> x * tileSizeX * tileScale + offset.x;
@@ -50,6 +53,8 @@ std::vector<std::shared_ptr<Object>> TileMapParser::parse(const std::string& til
             // Add new tile Object to the collection
             tileObjects.emplace_back(tileObject);
         }
+
+        layerCount--;
     }
 
     return tileObjects;
@@ -57,7 +62,7 @@ std::vector<std::shared_ptr<Object>> TileMapParser::parse(const std::string& til
 
 std::shared_ptr<MapTiles> TileMapParser::buildMapTiles(xml_node<>* rootNode)
 {
-    std::shared_ptr<TileSheetData> tileSheetData = buildTileSheetData(rootNode);
+    std::shared_ptr<TileSheets> tileSheetData = buildTileSheetData(rootNode);
     std::shared_ptr<MapTiles> map = std::make_shared<MapTiles>();
 
     // Loop through each layer in the XML document.
@@ -72,40 +77,38 @@ std::shared_ptr<MapTiles> TileMapParser::buildMapTiles(xml_node<>* rootNode)
     return map;
 }
 
-std::shared_ptr<TileSheetData> TileMapParser::buildTileSheetData(xml_node<> *rootNode)
+std::shared_ptr<TileSheets> TileMapParser::buildTileSheetData(xml_node<> *rootNode)
 {
-    TileSheetData tileSheetData;
+    TileSheets tileSheets;
 
-    // Traverse to the tile set node.
-    xml_node<>* tileSheetNode = rootNode -> first_node("tileset");
+    for (xml_node<>* tilesheetNode = rootNode -> first_node("tileset"); 
+        tilesheetNode; tilesheetNode = tilesheetNode -> next_sibling("tileset"))
+    {
+        TileSheetData tileSheetData;
 
-    int firstId = std::atoi(tileSheetNode -> first_attribute("firstgid") -> value());
+        // TODO: add error checking to ensure these values actually exist.
+        int firstgid = std::atoi(tilesheetNode -> first_attribute("firstgid") -> value());
+        tileSheetData.tileSize.x = std::atoi(tilesheetNode -> first_attribute("tilewidth") -> value());
+        tileSheetData.tileSize.y = std::atoi(tilesheetNode -> first_attribute("tileheight") -> value());
+        int tileCount = std::atoi(tilesheetNode -> first_attribute("tilecount") -> value());
+        tileSheetData.tileSheetColumns = std::atoi(tilesheetNode -> first_attribute("columns") -> value());
+        tileSheetData.tileSheetRows = tileCount / tileSheetData.tileSheetColumns;
 
-    // Build the tile set data.
-    tileSheetData.tileSize.x = 
-        std::atoi(tileSheetNode -> first_attribute("tilewidth") -> value());
-    tileSheetData.tileSize.y = 
-        std::atoi(tileSheetNode -> first_attribute("tileheight") -> value());
+        xml_node<>* imageNode = tilesheetNode -> first_node("image");
+        tileSheetData.textureId = textureManager.addResource(
+            std::string(imageNode -> first_attribute("source") -> value()));
+        
+        tileSheetData.imageSize.x = std::atoi(imageNode -> first_attribute("width") -> value());
+        tileSheetData.imageSize.y = std::atoi(imageNode -> first_attribute("height") -> value());
 
-    int tileCount = std::atoi(tileSheetNode -> first_attribute("tilecount") -> value());
+        tileSheets.insert(std::make_pair(firstgid, std::make_shared<TileSheetData>(tileSheetData)));
+    }
 
-    tileSheetData.tileSheetColumns = 
-        std::atoi(tileSheetNode -> first_attribute("columns") -> value());
-    tileSheetData.tileSheetRows = tileCount / tileSheetData.tileSheetColumns;
-
-    xml_node<>* imageNode = tileSheetNode -> first_node("image");
-
-    tileSheetData.textureId = textureManager.addResource(std::string(imageNode -> 
-        first_attribute("source") -> value()));
-
-    tileSheetData.imageSize.x = std::atoi(imageNode -> first_attribute("width") -> value());
-    tileSheetData.imageSize.y = std::atoi(imageNode -> first_attribute("height") -> value());
-
-    return std::make_shared<TileSheetData>(tileSheetData);
+    return std::make_shared<TileSheets>(tileSheets);
 }
 
 std::pair<std::string, std::shared_ptr<TiledLayer>> 
-    TileMapParser::buildLayer(xml_node<>* layerNode, std::shared_ptr<TileSheetData> tileSheetData)
+    TileMapParser::buildLayer(xml_node<>* layerNode, std::shared_ptr<TileSheets> tileSheets)
 {
     TileSet tileSet;
     std::shared_ptr<TiledLayer> layer = std::make_shared<TiledLayer>();
@@ -139,12 +142,28 @@ std::pair<std::string, std::shared_ptr<TiledLayer>>
 
             if (itr == tileSet.end())
             {
-                int textureX = tileId % tileSheetData -> tileSheetColumns - 1;
-                int textureY = tileId / tileSheetData -> tileSheetColumns;
+                std::shared_ptr<TileSheetData> tileSheet;
+
+                for (auto iter = tileSheets -> rbegin(); iter != tileSheets -> rend(); ++iter)
+                {
+                    if (tileId >= iter -> first)
+                    {
+                        tileSheet = iter -> second;
+                        break;
+                    }
+                }
+
+                if (!tileSheet)
+                {
+                    continue;
+                }
+
+                int textureX = tileId % tileSheet -> tileSheetColumns - 1;
+                int textureY = tileId / tileSheet -> tileSheetColumns;
 
                 std::shared_ptr<TileInfo> tileInfo = std::make_shared<TileInfo>(
-                    tileSheetData -> textureId, tileId, sf::IntRect(textureX * tileSheetData -> tileSize.x, 
-                    textureY * tileSheetData -> tileSize.y, tileSheetData -> tileSize.x, tileSheetData -> tileSize.y));
+                    tileSheet -> textureId, tileId, sf::IntRect(textureX * tileSheet -> tileSize.x, 
+                    textureY * tileSheet -> tileSize.y, tileSheet -> tileSize.x, tileSheet -> tileSize.y));
                 
                 itr = tileSet.insert(std::make_pair(tileId, tileInfo)).first;
             }

@@ -18,7 +18,7 @@ void SceneGame::onCreate()
     movement -> setInput(&inputManager);
 
     auto animation = player -> addComponent<AnimationComponent>();
-    int bitmanTextureId = textureManager.addResource(contentPath.getPath() + "player/viking_animation.png");
+    int bitmanTextureId = textureManager.addResource(contentPath.getPath() + "viking_animation.png");
 
     const int frameWidth = 165;
     const int frameHeight = 145;
@@ -48,7 +48,7 @@ void SceneGame::onCreate()
 
     sf::Vector2i mapOffset(-100, 128);
     std::vector<std::shared_ptr<Object>> levelTiles 
-        = tileMapParser.parse(contentPath.getPath() + "levels/test-map.tmx", mapOffset);
+        = tileMapParser.parse(contentPath.getPath() + "test-map.tmx", mapOffset);
     
     objects.addObject(levelTiles);
 }

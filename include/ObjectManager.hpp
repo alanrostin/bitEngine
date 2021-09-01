@@ -4,6 +4,7 @@
 #include <memory>
 #include <vector>
 #include "Object.hpp"
+#include "RenderSystem.hpp"
 
 class ObjectManager
 {
@@ -20,6 +21,7 @@ class ObjectManager
     private:
         std::vector<std::shared_ptr<Object>> objects;
         std::vector<std::shared_ptr<Object>> newObjects;
+        RenderSystem drawables;
 };
 
 #endif

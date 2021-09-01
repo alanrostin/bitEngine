@@ -28,10 +28,7 @@ void ObjectManager::lateUpdate(float deltaTime)
 
 void ObjectManager::render(Window& window)
 {
-    for (auto& object : objects)
-    {
-        object -> render(window);
-    }
+    drawables.render(window);
 }
 
 void ObjectManager::processNewObjects()
@@ -49,6 +46,7 @@ void ObjectManager::processNewObjects()
         }
 
         objects.insert(objects.end(), newObjects.begin(), newObjects.end());
+        drawables.addObject(newObjects);
         newObjects.clear();
     }
 }
@@ -59,9 +57,9 @@ void ObjectManager::processRemoveObjects()
 
     while (objectIterator != objects.end())
     {
-        auto object = **objectIterator;
+        auto object = *objectIterator;
 
-        if (object.isQueuedForRemove())
+        if (object -> isQueuedForRemove())
         {
             objectIterator = objects.erase(objectIterator);
         }
@@ -70,4 +68,6 @@ void ObjectManager::processRemoveObjects()
             ++objectIterator;
         }
     }
+
+    drawables.processRemove();
 }

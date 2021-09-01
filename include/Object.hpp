@@ -7,6 +7,7 @@
 #include "Window.hpp"
 #include "Component.hpp"
 #include "TransformComponent.hpp"
+#include "DrawableComponent.hpp"
 
 class Object
 {
@@ -40,6 +41,12 @@ class Object
             // The object does not have this component so we create it and add it to our list.
             std::shared_ptr<T> newComponent = std::make_shared<T>(this);
             components.push_back(newComponent);
+
+            // Check if the component is a drawable
+            if (std::dynamic_pointer_cast<DrawableComponent>(newComponent))
+            {
+                drawable = std::dynamic_pointer_cast<DrawableComponent>(newComponent);
+            }
             
             return newComponent;
         };
@@ -60,6 +67,8 @@ class Object
             return nullptr;
         };
 
+        std::shared_ptr<DrawableComponent> getDrawable();
+
         void queueForRemove();
         bool isQueuedForRemove();
 
@@ -67,6 +76,7 @@ class Object
     
     private:
         std::vector<std::shared_ptr<Component>> components;
+        std::shared_ptr<DrawableComponent> drawable;
         bool queuedForRemove;
 };
 

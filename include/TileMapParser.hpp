@@ -3,11 +3,9 @@
 
 #include <SFML/Graphics.hpp>
 #include <unordered_map>
-#include <map>
 #include <sstream>
 
 #include "rapidxml.hpp"
-#include "rapidxml_iterators.hpp"
 #include "rapidxml_utils.hpp"
 #include "Tile.h"
 #include "Utilities.h"

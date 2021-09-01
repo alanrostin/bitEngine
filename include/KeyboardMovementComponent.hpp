@@ -3,11 +3,15 @@
 
 #include "Component.hpp"
 #include "InputManager.hpp"
+#include "AnimationComponent.hpp"
 
 class KeyboardMovementComponent : public Component
 {
     public:
         KeyboardMovementComponent(Object* object);
+
+        void awake() override;
+
         void setInput(InputManager* inputManager);
         void setMovementSpeed(int moveSpeed);
         void update(float deltaTime) override;
@@ -15,6 +19,8 @@ class KeyboardMovementComponent : public Component
     private:
         int moveSpeed;
         InputManager* inputManager;
+
+        std::shared_ptr<AnimationComponent> animation;
 };
 
 #endif

@@ -23,6 +23,7 @@ class AnimationComponent : public Component
             std::shared_ptr<Animation> animation);
         void setAnimationState(AnimationState state);
         const AnimationState& getAnimationState() const;
+        void setAnimationDirection(FacingDirection facingDirection);
     
     private:
         std::shared_ptr<SpriteComponent> sprite;

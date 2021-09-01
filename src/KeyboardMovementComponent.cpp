@@ -7,6 +7,11 @@ KeyboardMovementComponent::KeyboardMovementComponent(Object* object)
 
 }
 
+void KeyboardMovementComponent::awake()
+{
+    animation = object -> getComponent<AnimationComponent>();
+}
+
 void KeyboardMovementComponent::setInput(InputManager* inputManager)
 {
     this -> inputManager = inputManager;
@@ -29,10 +34,12 @@ void KeyboardMovementComponent::update(float deltaTime)
     if (inputManager -> isKeyPressed(InputManager::Key::Left))
     {
         xMove = -moveSpeed;
+        animation -> setAnimationDirection(FacingDirection::Left);
     }
     else if (inputManager -> isKeyPressed(InputManager::Key::Right))
     {
         xMove = moveSpeed;
+        animation -> setAnimationDirection(FacingDirection::Right);
     }
 
     int yMove = 0;

@@ -19,10 +19,11 @@ void SceneGame::onCreate()
 
     auto animation = player -> addComponent<AnimationComponent>();
     int bitmanTextureId = textureManager.addResource(contentPath.getPath() + "player/viking_animation.png");
+
     const int frameWidth = 165;
     const int frameHeight = 145;
 
-    std::shared_ptr<Animation> idleAnimation = std::make_shared<Animation>();
+    std::shared_ptr<Animation> idleAnimation = std::make_shared<Animation>(FacingDirection::Right);
 
     const float idleAnimationSeconds = 0.2f;
     idleAnimation -> addFrame(bitmanTextureId, 600, 0, frameWidth, frameHeight, idleAnimationSeconds);

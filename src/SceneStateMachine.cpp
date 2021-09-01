@@ -37,7 +37,7 @@ void SceneStateMachine::render(Window& window)
     }
 }
 
-unsigned int SceneStateMachine::addScene(std::shared_ptr<Scene> scene)
+int SceneStateMachine::addScene(std::shared_ptr<Scene> scene)
 {
     auto insertedScene = scenes.insert(std::make_pair(insertedSceneId, scene));
     insertedSceneId++;
@@ -46,7 +46,7 @@ unsigned int SceneStateMachine::addScene(std::shared_ptr<Scene> scene)
     return insertedSceneId - 1;
 }
 
-void SceneStateMachine::removeScene(unsigned int sceneId)
+void SceneStateMachine::removeScene(int sceneId)
 {
     auto it = scenes.find(sceneId);
 
@@ -62,7 +62,7 @@ void SceneStateMachine::removeScene(unsigned int sceneId)
     }
 }
 
-void SceneStateMachine::switchToScene(unsigned int sceneId)
+void SceneStateMachine::switchToScene(int sceneId)
 {
     auto it = scenes.find(sceneId);
 

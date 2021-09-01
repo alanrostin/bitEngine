@@ -7,8 +7,8 @@ Engine::Engine() : window("bitman")
 
     std::shared_ptr<SceneGame> gameScene = std::make_shared<SceneGame>(contentPath, textureManager);
 
-    unsigned int splashScreenId = sceneStateMachine.addScene(splashScreen);
-    unsigned int gameSceneId = sceneStateMachine.addScene(gameScene);
+    int splashScreenId = sceneStateMachine.addScene(splashScreen);
+    int gameSceneId = sceneStateMachine.addScene(gameScene);
 
     splashScreen -> setSwitchToScene(gameSceneId);
     sceneStateMachine.switchToScene(splashScreenId);

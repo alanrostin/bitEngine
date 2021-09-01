@@ -34,7 +34,7 @@ void SceneSplashScreen::onDestroy()
 
 }
 
-void SceneSplashScreen::setSwitchToScene(unsigned int sceneId)
+void SceneSplashScreen::setSwitchToScene(int sceneId)
 {
     switchToState = sceneId;
 }

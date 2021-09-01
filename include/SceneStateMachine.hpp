@@ -20,23 +20,23 @@ class SceneStateMachine
         void render(Window& window);
 
         // Adds a scene to the state machine and returns th id of that scene.
-        unsigned int addScene(std::shared_ptr<Scene> scene);
+        int addScene(std::shared_ptr<Scene> scene);
 
         // Transitions to scene with specified id.
-        void switchToScene(unsigned int sceneId);
+        void switchToScene(int sceneId);
 
         // Removes scene from state machine.
-        void removeScene(unsigned int sceneId);
+        void removeScene(int sceneId);
     
     private:
         // Stores all of the scenes associated with this state machine.
-        std::unordered_map<unsigned int, std::shared_ptr<Scene>> scenes;
+        std::unordered_map<int, std::shared_ptr<Scene>> scenes;
 
         // Stores a reference to the current scene. Used when rendering/updating.
         std::shared_ptr<Scene> currentScene;
 
         // Stores current scene id. This is incremented whenever a scene is added.
-        unsigned int insertedSceneId;
+        int insertedSceneId;
 
 };
 

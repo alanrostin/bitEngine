@@ -14,7 +14,7 @@ class SceneSplashScreen : public Scene
         void onCreate() override;
         void onDestroy() override;
         void onActivate() override;
-        void setSwitchToScene(unsigned int sceneId);
+        void setSwitchToScene(int sceneId);
         void update(float deltaTime) override;
         void render(Window& window) override;
     
@@ -31,7 +31,7 @@ class SceneSplashScreen : public Scene
         float currentSeconds;
 
         // The state to transition to when this scene's time expires.
-        unsigned int switchToState;
+        int switchToState;
 };
 
 #endif

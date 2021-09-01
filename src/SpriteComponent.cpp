@@ -59,3 +59,8 @@ void SpriteComponent::setTextureRect(const sf::IntRect& rect)
 {
     sprite.setTextureRect(rect);
 }
+
+void SpriteComponent::setScale(float x, float y)
+{
+    sprite.setScale(x, y);
+}

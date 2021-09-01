@@ -20,6 +20,8 @@ class SpriteComponent : public Component
 
         void setTextureRect(int x, int y, int width, int height);
         void setTextureRect(const sf::IntRect& rect);
+
+        void setScale(float x, float y);
     
     private:
         ResourceManager<sf::Texture>* resourceManager;

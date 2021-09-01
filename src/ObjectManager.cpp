@@ -5,6 +5,11 @@ void ObjectManager::addObject(std::shared_ptr<Object> object)
     newObjects.push_back(object);
 }
 
+void ObjectManager::addObject(std::vector<std::shared_ptr<Object>>& objects)
+{
+    newObjects.insert(newObjects.end(), objects.begin(), objects.end());
+}
+
 void ObjectManager::update(float deltaTime)
 {
     for (auto& object : objects)
@@ -43,7 +48,7 @@ void ObjectManager::processNewObjects()
             object -> start();
         }
 
-        objects.assign(newObjects.begin(), newObjects.end());
+        objects.insert(objects.end(), newObjects.begin(), newObjects.end());
         newObjects.clear();
     }
 }

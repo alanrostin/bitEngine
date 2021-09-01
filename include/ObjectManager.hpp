@@ -9,6 +9,8 @@ class ObjectManager
 {
     public:
         void addObject(std::shared_ptr<Object> object);
+        void addObject(std::vector<std::shared_ptr<Object>>& objects);
+
         void update(float deltaTime);
         void lateUpdate(float deltaTime);
         void render(Window& window);

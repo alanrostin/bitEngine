@@ -9,6 +9,7 @@
 #include "KeyboardMovementComponent.hpp"
 #include "ResourceManager.hpp"
 #include "ObjectManager.hpp"
+#include "TileMapParser.hpp"
 #include "AnimationComponent.hpp"
 
 class SceneGame : public Scene
@@ -28,6 +29,7 @@ class SceneGame : public Scene
         InputManager inputManager;
         ResourceManager<sf::Texture>& textureManager;
         ObjectManager objects;
+        TileMapParser tileMapParser;
 };
 
 #endif

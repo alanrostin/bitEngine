@@ -7,7 +7,10 @@ BoxColliderComponent::BoxColliderComponent(Object* object)
 
 }
 
-BoxColliderComponent::~BoxColliderComponent() {}
+BoxColliderComponent::~BoxColliderComponent()
+{
+    
+}
 
 Manifold BoxColliderComponent::intersects(std::shared_ptr<ColliderComponent> collider)
 {

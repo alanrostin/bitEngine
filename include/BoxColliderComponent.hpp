@@ -8,6 +8,8 @@ class BoxColliderComponent : public ColliderComponent
 {
     public:
         BoxColliderComponent(Object* object);
+        ~BoxColliderComponent();
+
         Manifold intersects(std::shared_ptr<ColliderComponent> collider) override;
         void resolveOverlap(const Manifold& manifold) override;
         void setCollidable(const sf::FloatRect& rect);

@@ -2,5 +2,5 @@
 
 ContentPath::ContentPath()
 {
-    path = "./content/";
+    path = "content/";
 }

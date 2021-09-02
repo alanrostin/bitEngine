@@ -1,7 +1,7 @@
 #include "SceneGame.hpp"
 
 SceneGame::SceneGame(ContentPath& contentPath, ResourceManager<sf::Texture>& textureManager) 
-    : contentPath(contentPath),  textureManager(textureManager), tileMapParser(textureManager)
+    : contentPath(contentPath),  textureManager(textureManager)//, tileMapParser(textureManager)
 {
 
 }
@@ -46,11 +46,11 @@ void SceneGame::onCreate()
 
     objects.addObject(player);
 
-    sf::Vector2i mapOffset(-100, 128);
-    std::vector<std::shared_ptr<Object>> levelTiles 
-        = tileMapParser.parse(contentPath.getPath() + "test-map.tmx", mapOffset);
+    // sf::Vector2i mapOffset(-100, 128);
+    // std::vector<std::shared_ptr<Object>> levelTiles 
+    //     = tileMapParser.parse(contentPath.getPath() + "test-map.tmx", mapOffset);
     
-    objects.addObject(levelTiles);
+    // objects.addObject(levelTiles);
 }
 
 void SceneGame::onDestroy()

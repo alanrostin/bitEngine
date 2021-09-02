@@ -24,7 +24,11 @@ struct TileSheetData
     sf::Vector2u tileSize;
 };
 
-using TiledLayer = std::vector<std::shared_ptr<Tile>>;
+struct TiledLayer
+{
+    std::vector<std::shared_ptr<Tile>> tiles;
+    bool isVisible;
+};
 
 // Store layer names
 using MapTiles = std::map<std::string, std::shared_ptr<TiledLayer>>;

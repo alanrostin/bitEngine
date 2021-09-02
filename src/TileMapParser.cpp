@@ -15,8 +15,8 @@ std::vector<std::shared_ptr<Object>> TileMapParser::parse(const std::string& til
     xmlDoc.parse<0>(xmlFile.data());
     xml_node<>* rootNode = xmlDoc.first_node("map");
 
-    // Loat tile layers from XML
-    std::shared_ptr<MapTiles> tiles = buildMapTiles(rootNode);
+    // Load tile layers from XML
+    std::shared_ptr<MapTiles> mapTiles = buildMapTiles(rootNode);
 
     // Calculate the tiles position in world space
     int tileSizeX = std::atoi(rootNode -> first_attribute("tilewidth") -> value());
@@ -26,24 +26,27 @@ std::vector<std::shared_ptr<Object>> TileMapParser::parse(const std::string& til
 
     std::vector<std::shared_ptr<Object>> tileObjects;
 
-    int layerCount = tiles -> size() - 1;
+    int layerCount = mapTiles -> size() - 1;
 
-    for (const auto& layer : *tiles)
+    for (const auto layer : *mapTiles)
     {
-        for (const auto& tile : *layer.second)
+        for (const auto tile : layer.second -> tiles)
         {
             std::shared_ptr<TileInfo> tileInfo = tile -> tileProperties;
             std::shared_ptr<Object> tileObject = std::make_shared<Object>();
 
-            const unsigned int tileScale = 3;
+            const int tileScale = 3;
 
-            // Allocate sprite
-            auto sprite = tileObject -> addComponent<SpriteComponent>();
-            sprite -> setTextureManager(&textureManager);
-            sprite -> load(tileInfo -> textureId);
-            sprite -> setTextureRect(tileInfo -> textureRect);
-            sprite -> setScale(tileScale, tileScale);
-            sprite -> setSortOrder(layerCount);
+            if (layer.second -> isVisible)
+            {
+                // Allocate sprite
+                auto sprite = tileObject -> addComponent<SpriteComponent>();
+                sprite -> setTextureManager(&textureManager);
+                sprite -> load(tileInfo -> textureId);
+                sprite -> setTextureRect(tileInfo -> textureRect);
+                sprite -> setScale(tileScale, tileScale);
+                sprite -> setSortOrder(layerCount);
+            }
 
             // Calculate world position
             float x = tile -> x * tileSizeX * tileScale + offset.x;
@@ -172,13 +175,23 @@ std::pair<std::string, std::shared_ptr<TiledLayer>>
             tile -> tileProperties = itr -> second;
             tile -> x = count % width - 1;
             tile -> y = count / width;
-            layer -> emplace_back(tile);
+            layer -> tiles.emplace_back(tile);
         }
 
         count++;
     }
 
     const std::string layerName = layerNode -> first_attribute("name") -> value();
+
+    bool layerVisible = true;
+    xml_attribute<>* visibleAttribute = layerNode -> first_attribute("visible");
+
+    if (visibleAttribute)
+    {
+        layerVisible = std::stoi(visibleAttribute -> value());
+    }
+
+    layer -> isVisible = layerVisible;
 
     return std::make_pair(layerName, layer);
 }

@@ -54,7 +54,7 @@ class Object
 
         template<typename T> std::shared_ptr<T> getComponent()
         {
-            static_assert(std::is_base_of<Component, T>::value, "T must derive from Component");
+            // static_assert(std::is_base_of<Component, T>::value, "T must derive from Component");
             
             // Check that we don't already have a component of this type.
             for (auto& existingComponent : components)

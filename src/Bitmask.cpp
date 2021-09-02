@@ -5,6 +5,11 @@ Bitmask::Bitmask() : bits(0)
 
 }
 
+Bitmask::Bitmask(uint32_t bits) : bits(bits)
+{
+    
+}
+
 void Bitmask::setMask(Bitmask& other)
 {
     bits = other.getMask();

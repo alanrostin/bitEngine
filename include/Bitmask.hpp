@@ -7,6 +7,8 @@ class Bitmask
 {
     public:
         Bitmask();
+        Bitmask(uint32_t bits);
+
         // Overwrites this bitmask
         void setMask(Bitmask& other);
         // Returns binary representation of bitmask

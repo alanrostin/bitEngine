@@ -1,6 +1,7 @@
 #include "TransformComponent.hpp"
 
-TransformComponent::TransformComponent(Object* object) : Component(object), position(0.0f, 0.0f)
+TransformComponent::TransformComponent(Object* object) 
+    : Component(object), position(0.0f, 0.0f), isStaticTransform(false)
 {
 
 }
@@ -50,4 +51,14 @@ void TransformComponent::addY(float y)
 const sf::Vector2f& TransformComponent::getPosition() const
 {
     return position;
+}
+
+void TransformComponent::setStatic(bool isStatic)
+{
+    isStaticTransform = isStatic;
+}
+
+bool TransformComponent::isStatic() const
+{
+    return isStaticTransform;
 }

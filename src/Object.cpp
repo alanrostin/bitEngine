@@ -3,6 +3,7 @@
 Object::Object() : queuedForRemove(false)
 {
     transform = addComponent<TransformComponent>();
+    instanceId = addComponent<InstanceIdComponent>();
 }
 
 void Object::awake()

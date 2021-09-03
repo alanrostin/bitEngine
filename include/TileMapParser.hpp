@@ -7,8 +7,8 @@
 #include <sstream>
 #include <iostream>
 
-#include "rapidxml.hpp"
-#include "rapidxml_utils.hpp"
+#include "rapidxml/rapidxml.hpp"
+#include "rapidxml/rapidxml_utils.hpp"
 #include "Tile.h"
 #include "Utilities.h"
 #include "Object.hpp"

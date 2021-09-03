@@ -12,10 +12,12 @@ void ObjectManager::addObject(std::vector<std::shared_ptr<Object>>& objects)
 
 void ObjectManager::update(float deltaTime)
 {
-    for (auto& object : objects)
+    for (const auto& object : objects)
     {
         object -> update(deltaTime);
     }
+
+    collidables.update();
 }
 
 void ObjectManager::lateUpdate(float deltaTime)
@@ -46,13 +48,18 @@ void ObjectManager::processNewObjects()
         }
 
         objects.insert(objects.end(), newObjects.begin(), newObjects.end());
+
         drawables.addObject(newObjects);
+        collidables.addObject(newObjects);
+
         newObjects.clear();
     }
 }
 
 void ObjectManager::processRemoveObjects()
 {
+    bool removed = false;
+
     auto objectIterator = objects.begin();
 
     while (objectIterator != objects.end())
@@ -62,6 +69,7 @@ void ObjectManager::processRemoveObjects()
         if (object -> isQueuedForRemove())
         {
             objectIterator = objects.erase(objectIterator);
+            removed = true;
         }
         else
         {
@@ -69,5 +77,9 @@ void ObjectManager::processRemoveObjects()
         }
     }
 
-    drawables.processRemove();
+    if (removed)
+    {
+        drawables.processRemove();
+        collidables.processRemove();
+    }
 }

@@ -51,6 +51,19 @@ std::vector<std::shared_ptr<Object>> TileMapParser::parse(const std::string& til
             float x = tile -> x * tileSizeX * tileScale + offset.x;
             float y = tile -> y * tileSizeY * tileScale + offset.y;
             tileObject -> transform -> setPosition(x, y);
+            tileObject -> transform -> setStatic(true);
+
+            if (layer.first == "Collisions")
+            {
+                auto collider = tileObject -> addComponent<BoxColliderComponent>();
+                float left = x - (tileSizeX * tileScale) * 0.5f;
+                float top = y - (tileSizeY * tileScale) * 0.5f;
+                float width = tileSizeX * tileScale;
+                float height = tileSizeY * tileScale;
+
+                collider -> setCollidable(sf::FloatRect(left, top, width, height));
+                collider -> setLayer(CollisionLayer::Tile);
+            }
 
             // Add new tile Object to the collection
             tileObjects.emplace_back(tileObject);
@@ -97,7 +110,7 @@ std::shared_ptr<TileSheets> TileMapParser::buildTileSheetData(xml_node<> *rootNo
         tileSheetData.tileSheetRows = tileCount / tileSheetData.tileSheetColumns;
 
         xml_node<>* imageNode = tilesheetNode -> first_node("image");
-        tileSheetData.textureId = textureManager.addResource(
+        tileSheetData.textureId = textureManager.addResource("content/" + 
             std::string(imageNode -> first_attribute("source") -> value()));
         
         tileSheetData.imageSize.x = std::atoi(imageNode -> first_attribute("width") -> value());

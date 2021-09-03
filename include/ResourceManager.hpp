@@ -18,7 +18,7 @@ class ResourceManager
             }
 
             std::shared_ptr<T> resource = std::make_shared<T>();
-            if (!resource -> loadFromFile(filePath))
+            if (!resource -> sf::Texture::loadFromFile(filePath))
             {
                 return -1;
             }

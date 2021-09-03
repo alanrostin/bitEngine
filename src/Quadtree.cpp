@@ -160,7 +160,7 @@ int Quadtree::getChildIndexForObject(const sf::FloatRect& objectBounds)
         }
         else if (south)
         {
-            index - childSW;
+            index = childSW;
         }
     }
 

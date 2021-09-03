@@ -12,6 +12,7 @@
 #include "TileMapParser.hpp"
 #include "AnimationComponent.hpp"
 #include "BoxColliderComponent.hpp"
+#include "Debug.hpp"
 
 class SceneGame : public Scene
 {

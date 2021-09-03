@@ -34,7 +34,7 @@ std::vector<std::shared_ptr<Object>> TileMapParser::parse(const std::string& til
             std::shared_ptr<TileInfo> tileInfo = tile -> tileProperties;
             std::shared_ptr<Object> tileObject = std::make_shared<Object>();
 
-            const int tileScale = 3;
+            const int tileScale = 2;
 
             if (layer.second -> isVisible)
             {

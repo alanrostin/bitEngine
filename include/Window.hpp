@@ -11,6 +11,8 @@ class Window
 
         void startRender();
         void render(const sf::Drawable& drawable);
+        void render(const sf::Vertex* vertices, 
+            std::size_t vertexCount, sf::PrimitiveType primitiveType);
         void endRender();
 
         sf::Vector2u getCenter() const;

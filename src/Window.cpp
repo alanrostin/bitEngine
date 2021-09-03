@@ -28,6 +28,12 @@ void Window::render(const sf::Drawable& drawable)
     window.draw(drawable);
 }
 
+void Window::render(const sf::Vertex* vertices, 
+    std::size_t vertexCount, sf::PrimitiveType primitiveType)
+{
+    window.draw(vertices, vertexCount, primitiveType);
+}
+
 void Window::endRender()
 {
     window.display();

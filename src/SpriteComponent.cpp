@@ -42,7 +42,13 @@ void SpriteComponent::load(const std::string& filePath)
 
 void SpriteComponent::lateUpdate(float deltaTime)
 {
-    sprite.setPosition(object -> transform -> getPosition());
+    sf::Vector2f position = object -> transform -> getPosition();
+    const sf::IntRect& spriteBounds = sprite.getTextureRect();
+    const sf::Vector2f& spriteScale = sprite.getScale();
+
+    sprite.setPosition(
+        position.x - ((abs(spriteBounds.width) * 0.5f) * spriteScale.x), 
+        position.y - ((abs(spriteBounds.height) * 0.5f) * spriteScale.y));
 }
 
 void SpriteComponent::render(Window& window)

@@ -184,3 +184,16 @@ void Quadtree::split()
     children[childSE]  = std::make_shared<Quadtree>(maxObjects, maxLevels, level + 1, 
         sf::FloatRect(bounds.left + childWidth, bounds.top + childHeight, childWidth, childHeight), this);    
 }
+
+void Quadtree::drawDebug()
+{
+    if (children[0] != nullptr)
+    {
+        for (int i = 0; i < 4; i++)
+        {
+            children[i] -> drawDebug();
+        }
+    }
+
+    Debug::drawRect(bounds, sf::Color::Red);
+}

@@ -5,6 +5,7 @@
 #include <vector>
 #include "BoxColliderComponent.hpp"
 #include "Object.hpp"
+#include "Debug.hpp"
 
 class Quadtree
 {
@@ -19,6 +20,8 @@ class Quadtree
 
         std::vector<std::shared_ptr<BoxColliderComponent>> search(const sf::FloatRect& area);
         const sf::FloatRect& getBounds() const;
+
+        void drawDebug();
     
     private:
         void search(const sf::FloatRect& area, 

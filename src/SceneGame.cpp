@@ -9,6 +9,8 @@ SceneGame::SceneGame(ContentPath& contentPath, ResourceManager<sf::Texture>& tex
 void SceneGame::onCreate()
 {
     std::shared_ptr<Object> player = std::make_shared<Object>();
+
+    player -> transform -> setPosition(100, 550);
     
     // Adds a component by calling our previously written template function.
     auto sprite = player -> addComponent<SpriteComponent>();
@@ -45,12 +47,15 @@ void SceneGame::onCreate()
     animation -> addAnimation(AnimationState::Walk, walkAnimation);
 
     auto collider = player -> addComponent<BoxColliderComponent>();
-    collider -> setCollidable(sf::FloatRect(0, 0, frameWidth, frameHeight));
+    collider -> setSize(frameWidth * 0.4f, frameHeight * 0.5f);
+    collider -> setOffset(0.0f, 14.0f);
     collider -> setLayer(CollisionLayer::Player);
+    // collider -> setCollidable(sf::FloatRect(0, 0, frameWidth, frameHeight));
+    // collider -> setLayer(CollisionLayer::Player);
 
     objects.addObject(player);
 
-    sf::Vector2i mapOffset(-100, 128);
+    sf::Vector2i mapOffset(-160, 180);
     std::vector<std::shared_ptr<Object>> levelTiles 
         = tileMapParser.parse(contentPath.getPath() + "testmap1.tmx", mapOffset);
     
@@ -82,4 +87,5 @@ void SceneGame::lateUpdate(float deltaTime)
 void SceneGame::render(Window& window)
 {
     objects.render(window);
+    Debug::render(window);
 }

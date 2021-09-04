@@ -13,9 +13,10 @@ class RenderSystem
         void render(Window& window);
     
     private:
+        static bool layerSort(std::shared_ptr<DrawableComponent> a, std::shared_ptr<DrawableComponent> b);
         void addObject(std::shared_ptr<Object> object);
         void sortObjects();
-        std::vector<std::shared_ptr<Object>> drawables;
+        std::map<DrawLayer, std::vector<std::shared_ptr<DrawableComponent>>> drawables;
 };
 
 #endif

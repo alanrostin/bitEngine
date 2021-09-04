@@ -6,52 +6,78 @@ void RenderSystem::addObject(std::vector<std::shared_ptr<Object>>& objects)
     {
         addObject(object);
     }
-
-    sortObjects();
 }
 
 void RenderSystem::processRemove()
 {
-    auto objIterator = drawables.begin();
-
-    while (objIterator != drawables.end())
+    for (auto& layer : drawables)
     {
-        auto obj = *objIterator;
+        auto objIterator = layer.second.begin();
 
-        if (obj -> isQueuedForRemove())
+        while (objIterator != layer.second.end())
         {
-            objIterator = drawables.erase(objIterator);
-        }
-        else
-        {
-            ++objIterator;
+            auto obj = *objIterator;
+
+            if (!obj -> continueToRender())
+            {
+                objIterator = layer.second.erase(objIterator);
+            }
+            else
+            {
+                ++objIterator;
+            }
         }
     }
 }
 
 void RenderSystem::addObject(std::shared_ptr<Object> object)
 {
-    std::shared_ptr<DrawableComponent> draw = object -> getDrawable();
+    std::shared_ptr<DrawableComponent> objectsDrawable = object -> getDrawable();
 
-    if (draw)
+    if (objectsDrawable)
     {
-        drawables.emplace_back(object);
+        DrawLayer layer = objectsDrawable -> getDrawLayer();
+
+        auto itr = drawables.find(layer);
+
+        if (itr != drawables.end())
+        {
+            drawables[layer].push_back(objectsDrawable);
+        }
+        else
+        {
+            std::vector<std::shared_ptr<DrawableComponent>> objects;
+            objects.push_back(objectsDrawable);
+            drawables.insert(std::make_pair(layer, objects));
+        }
     }
+}
+
+bool RenderSystem::layerSort(std::shared_ptr<DrawableComponent> a, std::shared_ptr<DrawableComponent> b)
+{
+    return a -> getSetOrder() < b -> getSetOrder();
 }
 
 void RenderSystem::sortObjects()
 {
-    std::sort(drawables.begin(), drawables.end(), 
-        [](std::shared_ptr<Object> a, std::shared_ptr<Object> b) -> bool 
+    for (auto& layer : drawables)
+    {
+        if (!std::is_sorted(layer.second.begin(), layer.second.end(), layerSort))
         {
-            return a -> getDrawable() -> getSetOrder() < b -> getDrawable() -> getSetOrder();
-        });
+            std::sort(layer.second.begin(), layer.second.end(), layerSort);
+        }
+    }
 }
 
 void RenderSystem::render(Window& window)
 {
-    for (auto& drawable : drawables)
+    sortObjects();
+
+    for (auto& layer : drawables)
     {
-        drawable -> render(window);
+        for (auto& drawable : layer.second)
+        {
+            drawable -> render(window);
+        }
     }
 }

@@ -56,6 +56,11 @@ void SpriteComponent::render(Window& window)
     window.render(sprite);
 }
 
+bool SpriteComponent::continueToRender() const
+{
+    return !object -> isQueuedForRemove();
+}
+
 void SpriteComponent::setTextureRect(int x, int y, int width, int height)
 {
     sprite.setTextureRect(sf::IntRect(x, y, width, height));

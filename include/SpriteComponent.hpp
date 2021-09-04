@@ -18,6 +18,7 @@ class SpriteComponent : public Component, public DrawableComponent
 
         void lateUpdate(float deltaTime) override;
         void render(Window& window) override;
+        bool continueToRender() const override;
 
         void setTextureRect(int x, int y, int width, int height);
         void setTextureRect(const sf::IntRect& rect);

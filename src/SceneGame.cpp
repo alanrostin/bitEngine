@@ -15,6 +15,7 @@ void SceneGame::onCreate()
     // Adds a component by calling our previously written template function.
     auto sprite = player -> addComponent<SpriteComponent>();
     sprite -> setTextureManager(&textureManager);
+    sprite -> setDrawLayer(DrawLayer::Entities);
 
     auto movement = player -> addComponent<KeyboardMovementComponent>();
     movement -> setInput(&inputManager);

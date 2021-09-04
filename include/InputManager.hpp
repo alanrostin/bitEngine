@@ -14,7 +14,9 @@ class InputManager
             Right = 2,
             Up = 3,
             Down = 4,
-            Esc = 5
+            Esc = 5,
+            LBracket = 6,
+            RBracket = 7
         };
         void update();
         bool isKeyPressed(Key keycode);

@@ -1,6 +1,6 @@
 #include "CollisionSystem.hpp"
 
-CollisionSystem::CollisionSystem()
+CollisionSystem::CollisionSystem() : collisionTree(5, 5, 0, {0, 0, 4200, 900}, nullptr)
 {
     Bitmask defaultCollisions;
     defaultCollisions.setBit((int)CollisionLayer::Default);

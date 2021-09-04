@@ -79,6 +79,8 @@ void SceneGame::update(float deltaTime)
     objects.processRemoveObjects();
     objects.processNewObjects();
     objects.update(deltaTime);
+
+    Debug::handleCameraZoom(window, inputManager);
 }
 
 void SceneGame::lateUpdate(float deltaTime)

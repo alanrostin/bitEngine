@@ -3,6 +3,22 @@
 std::vector<sf::RectangleShape> Debug::rects = {};
 std::vector<std::array<sf::Vertex, 2>> Debug::lines = {};
 
+void Debug::handleCameraZoom(Window& window, InputManager& inputManager)
+{
+    if (inputManager.isKeyUp(InputManager::Key::LBracket))
+    {
+        sf::View view = window.getView();
+        view.zoom(1.1f);
+        window.setView(view);
+    }
+    else if (inputManager.isKeyUp(InputManager::Key::RBracket))
+    {
+        sf::View view = window.getView();
+        view.zoom(0.9f);
+        window.setView(view);
+    }
+}
+
 void Debug::render(Window& window)
 {
     for (auto& rect : rects)

@@ -15,8 +15,13 @@ void InputManager::update()
     thisFrameKeys.setBit((int)Key::Down, 
         (sf::Keyboard::isKeyPressed(sf::Keyboard::Down)) || 
         (sf::Keyboard::isKeyPressed(sf::Keyboard::S)));
-    thisFrameKeys.setBit((int)Key::Esc), 
-        sf::Keyboard::isKeyPressed(sf::Keyboard::Escape);
+    thisFrameKeys.setBit((int)Key::Esc, 
+        sf::Keyboard::isKeyPressed(sf::Keyboard::Escape));
+    
+    thisFrameKeys.setBit((int)Key::LBracket, 
+        sf::Keyboard::isKeyPressed(sf::Keyboard::LBracket));
+    thisFrameKeys.setBit((int)Key::RBracket, 
+        sf::Keyboard::isKeyPressed(sf::Keyboard::RBracket));
 }
 
 // Return true if the specified key is currently being pressed

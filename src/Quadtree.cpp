@@ -1,6 +1,6 @@
 #include "Quadtree.hpp"
 
-Quadtree::Quadtree() : Quadtree(5, 5, 0, {0.0f, 0.0f, 1600, 900}, nullptr) {}
+Quadtree::Quadtree() : Quadtree(5, 5, 0, {0, 0, 1600, 900}, nullptr) {}
 
 Quadtree::Quadtree(int maxObjects, int maxLevels, 
     int level, sf::FloatRect bounds, Quadtree* parent) 

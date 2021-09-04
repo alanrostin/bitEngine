@@ -3,9 +3,11 @@
 Engine::Engine() : window("bitman")
 {
     std::shared_ptr<SceneSplashScreen> splashScreen 
-        = std::make_shared<SceneSplashScreen>(contentPath, sceneStateMachine, window, textureManager);
+        = std::make_shared<SceneSplashScreen>(contentPath, 
+        sceneStateMachine, window, textureManager);
 
-    std::shared_ptr<SceneGame> gameScene = std::make_shared<SceneGame>(contentPath, textureManager);
+    std::shared_ptr<SceneGame> gameScene 
+        = std::make_shared<SceneGame>(contentPath, textureManager, window);
 
     int splashScreenId = sceneStateMachine.addScene(splashScreen);
     int gameSceneId = sceneStateMachine.addScene(gameScene);

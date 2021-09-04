@@ -1,10 +1,9 @@
 #include "SceneGame.hpp"
 
-SceneGame::SceneGame(ContentPath& contentPath, ResourceManager<sf::Texture>& textureManager) 
-    : contentPath(contentPath),  textureManager(textureManager), tileMapParser(textureManager)
-{
-
-}
+SceneGame::SceneGame(ContentPath& contentPath, 
+    ResourceManager<sf::Texture>& textureManager, Window& window) 
+    : contentPath(contentPath),  textureManager(textureManager), 
+    tileMapParser(textureManager), window(window) {}
 
 void SceneGame::onCreate()
 {
@@ -54,6 +53,8 @@ void SceneGame::onCreate()
     // collider -> setCollidable(sf::FloatRect(0, 0, frameWidth, frameHeight));
     // collider -> setLayer(CollisionLayer::Player);
 
+    auto camera = player -> addComponent<CameraComponent>();
+    camera -> setWindow(&window);
     objects.addObject(player);
 
     sf::Vector2i mapOffset(-160, 180);

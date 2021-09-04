@@ -16,6 +16,10 @@ class Window
         void endRender();
 
         sf::Vector2u getCenter() const;
+        sf::FloatRect getViewSpace() const;
+
+        const sf::View& getView() const;
+        void setView(const sf::View& view);
         
         bool isOpen() const;
     

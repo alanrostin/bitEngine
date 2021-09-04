@@ -13,11 +13,13 @@
 #include "AnimationComponent.hpp"
 #include "BoxColliderComponent.hpp"
 #include "Debug.hpp"
+#include "CameraComponent.hpp"
 
 class SceneGame : public Scene
 {
     public:
-        SceneGame(ContentPath& contentPath, ResourceManager<sf::Texture>& textureManager);
+        SceneGame(ContentPath& contentPath, 
+            ResourceManager<sf::Texture>& textureManager, Window& window);
         void onCreate() override;
         void onDestroy() override;
         void processInput() override;
@@ -32,6 +34,7 @@ class SceneGame : public Scene
         ResourceManager<sf::Texture>& textureManager;
         ObjectManager objects;
         TileMapParser tileMapParser;
+        Window& window;
 };
 
 #endif
